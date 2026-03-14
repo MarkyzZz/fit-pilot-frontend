@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "angular-architect": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "computedHash": "0dcdd28f326940574f3f981b2d266b0cd27f060c2071f4b073206f734d13a4de"
+    }
+  }
+}
