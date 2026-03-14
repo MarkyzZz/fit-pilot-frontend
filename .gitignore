@@ -72,3 +72,7 @@ __screenshots__/
 Thumbs.db
 
 .ai/*
+/.claude
+/.vscode
+/.agents
+.mcp.json
