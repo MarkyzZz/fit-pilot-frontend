@@ -25,8 +25,7 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "polyfills": ["zone.js"],
-                        "allowedCommonJsDependencies": ["bezier-easing"],
-                        "assets": [
+"assets": [
                             {
                                 "glob": "**/*",
                                 "input": "public"
