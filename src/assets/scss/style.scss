@@ -1,0 +1,18 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@use "themecolors/blue_theme";
+
+@use "variables" as *;
+@use "override-component";
+@use "theme-variables/default-variables";
+@use "theme-variables/light-theme-variables";
+
+//container layout
+@use "layouts/transitions";
+@use "container";
+@use "layouts/layouts";
+
+
+@use "pages/auth";
+@use "pages/dashboards";
