@@ -48,7 +48,7 @@ module.exports = tseslint.config(
             '@typescript-eslint/explicit-member-accessibility': [
                 'error',
                 {
-                    accessibility: 'no-public',
+                    accessibility: 'explicit',
                 },
             ],
             '@typescript-eslint/naming-convention': [
