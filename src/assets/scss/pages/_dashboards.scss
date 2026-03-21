@@ -1,0 +1,40 @@
+@use "../variables" as *;
+
+.timeline {
+    .timeline-item {
+        .point {
+            .timeline-badge {
+
+                &.border-primary {
+                    border: 2px solid var(--mat-sys-primary) !important;
+                }
+
+                &.border-accent {
+                    border: 2px solid var(--mat-sys-secondary) !important;
+                }
+
+                &.border-success {
+                    border: 2px solid $success !important;
+                }
+
+                &.border-warning {
+                    border: 2px solid $warning !important;
+                }
+
+                &.border-error {
+                    border: 2px solid var(--mat-sys-error) !important;
+                }
+            }
+        }
+
+        &:last-child {
+            .timeline-border {
+                display: none !important;
+            }
+        }
+
+        &:last-child {
+            height: auto;
+        }
+    }
+}

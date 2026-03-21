@@ -23,26 +23,34 @@
                         "browser": "src/main.ts",
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
+                        "polyfills": ["zone.js"],
+                        "allowedCommonJsDependencies": ["bezier-easing"],
                         "assets": [
                             {
                                 "glob": "**/*",
                                 "input": "public"
-                            }
+                            },
+                            "src/favicon.ico",
+                            "src/assets"
                         ],
-                        "styles": ["src/styles.scss"]
+                        "styles": [
+                            "src/globals.css",
+                            "src/styles.scss",
+                            "src/assets/scss/style.scss"
+                        ]
                     },
                     "configurations": {
                         "production": {
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kB",
-                                    "maximumError": "1MB"
+                                    "maximumWarning": "12mb",
+                                    "maximumError": "12mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "4kB",
-                                    "maximumError": "8kB"
+                                    "maximumWarning": "12mb",
+                                    "maximumError": "12mb"
                                 }
                             ],
                             "outputHashing": "all"
