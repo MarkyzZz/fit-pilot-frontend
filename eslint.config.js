@@ -126,7 +126,6 @@ module.exports = tseslint.config(
             '@angular-eslint/template/eqeqeq': 'error',
             '@angular-eslint/template/prefer-control-flow': 'error',
             '@angular-eslint/template/prefer-ngsrc': 'warn',
-            '@angular-eslint/template/prefer-self-closing-tags': 'warn',
             '@angular-eslint/template/use-track-by-function': 'warn',
         },
     },
