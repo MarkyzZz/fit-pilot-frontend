@@ -25,7 +25,7 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "polyfills": ["zone.js"],
-"assets": [
+                        "assets": [
                             {
                                 "glob": "**/*",
                                 "input": "public"
@@ -33,11 +33,7 @@
                             "src/favicon.ico",
                             "src/assets"
                         ],
-                        "styles": [
-                            "src/globals.css",
-                            "src/styles.scss",
-                            "src/assets/scss/style.scss"
-                        ]
+                        "styles": ["src/globals.css", "src/styles.scss", "src/assets/scss/style.scss"]
                     },
                     "configurations": {
                         "production": {
