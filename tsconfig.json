@@ -3,6 +3,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "baseUrl": "./",
         "strict": true,
         "noImplicitOverride": true,
         "noPropertyAccessFromIndexSignature": true,
@@ -12,8 +13,13 @@
         "isolatedModules": true,
         "experimentalDecorators": true,
         "importHelpers": true,
+        "esModuleInterop": true,
+        "sourceMap": true,
         "target": "ES2022",
-        "module": "preserve"
+        "module": "preserve",
+        "moduleResolution": "bundler",
+        "useDefineForClassFields": false,
+        "strictPropertyInitialization": false
     },
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false,

@@ -1,0 +1,33 @@
+<div class="grid grid-cols-12 gap-6">
+    @for(productcard of productcards; track productcards) {
+    <div class="sm:col-span-6 xl:col-span-3 col-span-12">
+        <mat-card class="cardWithShadow productcard overflow-hidden group">
+            <a class="relative overflow-hidden cursor-pointer" routerLink="/widgets/cards">
+                <img src="{{ productcard.imgSrc }}" alt="imgSrc" class="w-full group-hover:scale-[1.03] duration-300"
+                    mat-card-image />
+            </a>
+            <mat-card-content class="relative -mt-10">
+                <button mat-mini-fab class="size-7.5! flex bg-primary text-white!" matTooltip="Add to Cart">
+                    <i-tabler name="basket" class="size-4! flex!"></i-tabler>
+                </button>
+                <mat-card-title class="mat-headline-2 text-base mb-1! mt-4!">
+                    {{ productcard.title }}
+                </mat-card-title>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <h6 class="text-base font-semibold">${{ productcard.price }}</h6>
+                        <span class="text-sm ms-1 line-through">${{ productcard.rprice }}</span>
+                    </div>
+                    <div class="flex gap-1">
+                        <span><i-tabler name="star" class="fill-warning size-4.5!"></i-tabler></span>
+                        <span><i-tabler name="star" class="fill-warning size-4.5!"></i-tabler></span>
+                        <span><i-tabler name="star" class="fill-warning size-4.5!"></i-tabler></span>
+                        <span><i-tabler name="star" class="fill-warning size-4.5!"></i-tabler></span>
+                        <span><i-tabler name="star" class="fill-warning size-4.5!"></i-tabler></span>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    }
+</div>

@@ -1,0 +1,42 @@
+<div class="flex h-screen w-full items-center justify-center overflow-hidden p-2">
+  <mat-card class="cardWithShadow overflow-hidden auth-card mx-auto mb-0">
+    <div class="grid grid-cols-12 gap-6">
+      <div class="lg:col-span-6 col-span-12 flex items-stretch">
+        <div class="w-full p-10 flex flex-col justify-center aling-center">
+          <div class="text-center">Your Social Campaigns</div>
+
+          <form class="mt-8">
+            <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Username</mat-label>
+            <mat-form-field appearance="outline" class="w-full" color="primary">
+              <input matInput />
+            </mat-form-field>
+
+            <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password</mat-label>
+            <mat-form-field appearance="outline" class="w-full" color="primary">
+              <input matInput type="password" />
+            </mat-form-field>
+
+            <div class="flex items-center justify-between mb-3">
+              <mat-checkbox color="primary">Remember this Device</mat-checkbox>
+              <a [routerLink]="['/']" class="text-primary font-semibold no-underline text-sm">Forgot Password
+                ?</a>
+            </div>
+            <a [routerLink]="['/']" mat-flat-button color="primary" class="w-full">
+              Sign In
+            </a>
+
+          </form>
+          <span class="block font-medium text-center mt-6">New to Modernize?
+            <a [routerLink]="['/authentication/register']" class="no-underline text-primary font-medium text-sm">
+              Create an account</a>
+          </span>
+        </div>
+      </div>
+      <div class="lg:col-span-6 col-span-12 relative hidden lg:flex justify-center items-stretch bg-light p-5">
+        <div class="flex items-center justify-center w-full">
+          <img src="/assets/images/backgrounds/login-bg.svg" alt="login" class="img-fluid object-cover" />
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
