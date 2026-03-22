@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './side-login.component.html',
 })
 export class AppSideLoginComponent {
-  constructor(private router: Router) {}
+  public constructor(private router: Router) {}
+
+  public readonly loginImage = signal(
+      Math.random() < 0.5
+          ? '/assets/images/backgrounds/login_1.png'
+          : '/assets/images/backgrounds/login_2.png'
+  );
 
   form = new FormGroup({
     uname: new FormControl('', [Validators.required, Validators.minLength(6)]),

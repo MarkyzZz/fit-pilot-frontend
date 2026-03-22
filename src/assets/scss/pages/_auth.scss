@@ -1,5 +1,17 @@
 @use "../variables" as *;
 
+.auth-card {
+  .login-image-wrapper {
+    height: 500px;
+  }
+
+  .login-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .mat-mdc-form-field.mat-form-field-invalid {
 
   .mdc-notched-outline__leading,
