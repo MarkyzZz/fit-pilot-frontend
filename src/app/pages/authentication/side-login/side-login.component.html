@@ -18,23 +18,24 @@
 
                         <div class="flex flex-col mb-3">
                             <mat-checkbox color="primary">Remember this Device</mat-checkbox>
-                            <a class="text-primary font-semibold no-underline text-sm mt-2" [routerLink]="['/']">Forgot
+                            <a [routerLink]="['/']" class="text-primary font-semibold no-underline text-sm mt-2">Forgot
                                 Password ?</a>
                         </div>
-                        <a class="w-full" color="primary" mat-flat-button [routerLink]="['/']">
+                        <a [routerLink]="['/']" class="w-full" color="primary" mat-flat-button>
                             Sign In
                         </a>
 
                     </form>
                     <span class="block font-medium text-center mt-6">New to Modernize?
-            <a class="no-underline text-primary font-medium text-sm" [routerLink]="['/authentication/register']">
-              Create an account</a>
-          </span>
+                        <a [routerLink]="['/authentication/register']"
+                           class="no-underline text-primary font-medium text-sm">
+                            Create an account</a>
+                    </span>
                 </div>
             </div>
             <div class="lg:col-span-6 col-span-12 relative hidden lg:flex justify-center items-stretch bg-light">
                 <div class="flex items-center justify-center w-full login-image-wrapper">
-                    <img alt="login" class="login-image" [src]="loginImage()" />
+                    <img [src]="loginImage()" alt="login" class="login-image" />
                 </div>
             </div>
         </div>

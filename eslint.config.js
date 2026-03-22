@@ -107,20 +107,7 @@ module.exports = tseslint.config(
         extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
         rules: {
             // Angular template best practices
-            '@angular-eslint/template/attributes-order': [
-                'error',
-                {
-                    // alphabetical: true,
-                    order: [
-                        'STRUCTURAL_DIRECTIVE', // deprecated, use @if and @for instead
-                        'TEMPLATE_REFERENCE', // e.g. `<input #inputRef>`
-                        'ATTRIBUTE_BINDING', // e.g. `<input required>`, `id="3"`
-                        'INPUT_BINDING', // e.g. `[id]="3"`, `[attr.colspan]="colspan"`,
-                        'TWO_WAY_BINDING', // e.g. `[(id)]="id"`,
-                        'OUTPUT_BINDING', // e.g. `(idChange)="handleChange()"`,
-                    ],
-                },
-            ],
+            '@angular-eslint/template/attributes-order': 'off',
             '@angular-eslint/template/button-has-type': 'warn',
             '@angular-eslint/template/cyclomatic-complexity': ['warn', { maxComplexity: 10 }],
             '@angular-eslint/template/eqeqeq': 'error',
