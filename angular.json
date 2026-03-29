@@ -69,7 +69,10 @@
                             "buildTarget": "fit-pilot-frontend:build:development"
                         }
                     },
-                    "defaultConfiguration": "development"
+                    "defaultConfiguration": "development",
+                    "options": {
+                        "allowedHosts": [".ngrok-free.app"]
+                    }
                 },
                 "test": {
                     "builder": "@angular/build:unit-test"
