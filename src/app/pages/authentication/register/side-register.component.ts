@@ -7,11 +7,11 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 
 @Component({
-  selector: 'app-side-register',
+  selector: 'app-register',
   imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
   templateUrl: './side-register.component.html',
 })
-export class AppSideRegisterComponent {
+export class RegisterComponent {
   options = this.settings.getOptions();
 
   constructor(private settings: CoreService, private router: Router) {}
