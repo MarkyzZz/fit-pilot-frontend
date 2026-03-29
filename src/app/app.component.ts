@@ -7,5 +7,5 @@ import { RouterOutlet } from '@angular/router';
     templateUrl: './app.component.html',
 })
 export class AppComponent {
-    protected title = 'Fitpilot Fitness Tracking';
+    protected title = 'Modernize Angular Admin Template';
 }
