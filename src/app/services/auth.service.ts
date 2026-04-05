@@ -18,7 +18,7 @@ export class AuthService {
 
     public login(credentials: LoginCredentials): Observable<User> {
         this.isLoading.set(true);
-        return this.http.post<User>(`${environment.apiUrl}/api/login`, credentials).pipe(
+        return this.http.post<User>(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
             tap({
                 next: (user) => {
                     this.currentUser.set(user);
@@ -32,7 +32,7 @@ export class AuthService {
     }
 
     public logout(): Observable<void> {
-        return this.http.post<void>(`${environment.apiUrl}/api/logout`, {}).pipe(
+        return this.http.post<void>(`${environment.apiUrl}/api/auth/logout`, {}).pipe(
             tap(() => {
                 this.currentUser.set(null);
             }),
