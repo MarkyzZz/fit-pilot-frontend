@@ -5,17 +5,17 @@
                 <div class="w-full p-10 flex flex-col justify-center aling-center">
                     <h1 class="text-5xl text-center">Fit Pilot</h1>
 
-                    <form class="mt-8">
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Username
+                    <form class="mt-8" [formGroup]="form" (ngSubmit)="submit()">
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Email
                         </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input matInput />
+                            <input matInput type="email" formControlName="email" />
                         </mat-form-field>
 
                         <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password
                         </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input matInput type="password" />
+                            <input matInput type="password" formControlName="password" />
                         </mat-form-field>
 
                         <div class="flex flex-col mb-3">
@@ -24,10 +24,20 @@
                                 Forgot Password ?
                             </a>
                         </div>
-                        <a [routerLink]="['/']" class="w-full" color="primary" mat-flat-button>
-                            Sign In
-                        </a>
 
+                        <button
+                            type="submit"
+                            class="w-full"
+                            color="primary"
+                            mat-flat-button
+                            [disabled]="form.invalid || isLoading()"
+                        >
+                            Sign In
+                        </button>
+
+                        @if (error()) {
+                            <mat-error class="text-sm mt-2 block">{{ error() }}</mat-error>
+                        }
                     </form>
                     <span class="flex flex-col sm:block font-medium text-center mt-6">New to Fitpilot?
                         <a [routerLink]="['/authentication/register']"
