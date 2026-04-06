@@ -30,7 +30,7 @@
                             class="w-full"
                             color="primary"
                             mat-flat-button
-                            [disabled]="form.invalid || isLoading()"
+                            [disabled]="form.invalid || isLoading() || !csrfReady()"
                         >
                             Sign In
                         </button>

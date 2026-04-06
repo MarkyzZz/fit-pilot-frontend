@@ -11,9 +11,13 @@ export class AuthService {
 
     public readonly currentUser = signal<User | null>(null);
     public readonly isLoading = signal(false);
+    public readonly csrfReady = signal(false);
 
-    public initCsrf(): Observable<void> {
-        return this.http.get<void>(`${environment.apiUrl}/sanctum/csrf-cookie`);
+    public initCsrf(): void {
+        this.http.get<void>(`${environment.apiUrl}/sanctum/csrf-cookie`).subscribe({
+            next: () => this.csrfReady.set(true),
+            error: () => this.csrfReady.set(true), // allow login attempt even if csrf endpoint fails
+        });
     }
 
     public login(credentials: LoginCredentials): Observable<User> {

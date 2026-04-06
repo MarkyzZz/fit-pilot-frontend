@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
     );
 
     public readonly isLoading = this.authService.isLoading;
+    public readonly csrfReady = this.authService.csrfReady;
     public readonly error = signal<string | null>(null);
 
     public form: LoginForm = new FormGroup({
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
     });
 
     public ngOnInit(): void {
-        this.authService.initCsrf().subscribe();
+        this.authService.initCsrf();
     }
 
     public submit(): void {
