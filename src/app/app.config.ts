@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideHttpClient, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { sanctumInterceptor } from './interceptors/sanctum.interceptor';
 import { routes } from './app.routes';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
@@ -32,10 +32,6 @@ export const appConfig: ApplicationConfig = {
         ),
         provideHttpClient(
             withInterceptors([sanctumInterceptor]),
-            withXsrfConfiguration({
-                cookieName: 'XSRF-TOKEN',
-                headerName: 'X-XSRF-TOKEN',
-            }),
         ),
         provideClientHydration(),
         provideAnimationsAsync(),
