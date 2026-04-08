@@ -3,11 +3,11 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 
 export function sanctumInterceptor(
-    req: HttpRequest<unknown>,
+    request: HttpRequest<unknown>,
     next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
-    if (!req.url.startsWith(environment.apiUrl)) {
-        return next(req);
+    if (!request.url.startsWith(environment.apiUrl)) {
+        return next(request);
     }
 
     const headers: Record<string, string> = { Accept: 'application/json' };
@@ -21,7 +21,7 @@ export function sanctumInterceptor(
     }
 
     return next(
-        req.clone({
+        request.clone({
             setHeaders: headers,
             withCredentials: true,
         }),
