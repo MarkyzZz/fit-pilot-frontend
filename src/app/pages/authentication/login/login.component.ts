@@ -16,13 +16,13 @@ export class LoginComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);
     private readonly authService = inject(AuthService);
 
-    public readonly loginImage = signal(
+    protected readonly loginImage = signal(
         Math.random() < 0.5 ? '/assets/images/backgrounds/login_1.png' : '/assets/images/backgrounds/login_2.png',
     );
 
-    public readonly isLoading = this.authService.isLoading;
-    public readonly csrfReady = this.authService.csrfReady;
-    public readonly error = signal<string | null>(null);
+    protected readonly isLoading = this.authService.isLoading;
+    protected readonly csrfReady = this.authService.csrfReady;
+    protected readonly error = signal<string | null>(null);
 
     public form: LoginForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
