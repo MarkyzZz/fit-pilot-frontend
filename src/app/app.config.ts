@@ -1,18 +1,8 @@
-import {
-  ApplicationConfig,
-  provideZoneChangeDetection,
-  importProvidersFrom,
-} from '@angular/core';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { sanctumInterceptor } from './interceptors/sanctum.interceptor';
 import { routes } from './app.routes';
-import {
-  provideRouter,
-  withComponentInputBinding,
-  withInMemoryScrolling,
-} from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -30,30 +20,32 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(
-      routes,
-      withInMemoryScrolling({
-        scrollPositionRestoration: 'enabled',
-        anchorScrolling: 'enabled',
-      }),
-      withComponentInputBinding()
-    ),
-    provideHttpClient(withInterceptorsFromDi()),
-    provideClientHydration(),
-    provideAnimationsAsync(),
-    importProvidersFrom(
-      FormsModule,
-      ReactiveFormsModule,
-      MaterialModule,
-      TablerIconsModule.pick(TablerIcons),
-      NgScrollbarModule
-    ),
-    provideTranslateService(),
-    provideTranslateHttpLoader({
-      prefix: './assets/i18n/',
-      suffix: '.json'
-    }),
-  ],
+    providers: [
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(
+            routes,
+            withInMemoryScrolling({
+                scrollPositionRestoration: 'enabled',
+                anchorScrolling: 'enabled',
+            }),
+            withComponentInputBinding(),
+        ),
+        provideHttpClient(
+            withInterceptors([sanctumInterceptor]),
+        ),
+        provideClientHydration(),
+        provideAnimationsAsync(),
+        importProvidersFrom(
+            FormsModule,
+            ReactiveFormsModule,
+            MaterialModule,
+            TablerIconsModule.pick(TablerIcons),
+            NgScrollbarModule,
+        ),
+        provideTranslateService(),
+        provideTranslateHttpLoader({
+            prefix: './assets/i18n/',
+            suffix: '.json',
+        }),
+    ],
 };

@@ -1,21 +1,24 @@
 import { Component } from '@angular/core';
+import { CoreService } from 'src/app/services/core.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-side-login',
+  selector: 'app-register',
   imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './side-login.component.html',
+  templateUrl: './side-register.component.html',
 })
-export class AppSideLoginComponent {
-  constructor(private router: Router) {}
+export class RegisterComponent {
+  options = this.settings.getOptions();
+
+  constructor(private settings: CoreService, private router: Router) {}
 
   form = new FormGroup({
     uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
@@ -24,6 +27,7 @@ export class AppSideLoginComponent {
   }
 
   submit() {
-    this.router.navigate(['']);
+    // console.log(this.form.value);
+    this.router.navigate(['/']);
   }
 }
