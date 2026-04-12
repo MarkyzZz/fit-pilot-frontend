@@ -19,6 +19,8 @@ export class RegisterComponent implements OnInit {
     protected readonly isLoading = this.authService.isLoading;
     protected readonly csrfReady = this.authService.csrfReady;
     protected readonly error = signal<string | null>(null);
+    protected readonly showPassword = signal(false);
+    protected readonly showPasswordConfirmation = signal(false);
 
     public form: RegisterForm = new FormGroup(
         {

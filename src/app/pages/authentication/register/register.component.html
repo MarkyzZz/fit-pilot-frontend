@@ -41,7 +41,16 @@
                         <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password
                         </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input autocomplete="new-password" formControlName="password" matInput type="password" />
+                            <input [type]="showPassword() ? 'text' : 'password'"
+                                   autocomplete="new-password"
+                                   formControlName="password"
+                                   matInput />
+                            <button (click)="showPassword.set(!showPassword())"
+                                    [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                                    mat-icon-button matSuffix
+                                    type="button">
+                                <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
                             @if (form.controls.password.hasError('required')) {
                                 <mat-error>Password is required.</mat-error>
                             } @else if (form.controls.password.hasError('minlength')) {
@@ -52,8 +61,17 @@
                         <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Confirm Password
                         </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input autocomplete="new-password" formControlName="password_confirmation" matInput
-                                   type="password" />
+                            <input [type]="showPasswordConfirmation() ? 'text' : 'password'"
+                                   autocomplete="new-password"
+                                   formControlName="password_confirmation"
+                                   matInput />
+                            <button (click)="showPasswordConfirmation.set(!showPasswordConfirmation())"
+                                    [attr.aria-label]="showPasswordConfirmation() ? 'Hide password confirmation' : 'Show password confirmation'"
+                                    mat-icon-button
+                                    matSuffix
+                                    type="button">
+                                <mat-icon>{{ showPasswordConfirmation() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            </button>
                             @if (form.controls.password_confirmation.hasError('required')) {
                                 <mat-error>Please confirm your password.</mat-error>
                             } @else if (form.hasError('passwordMismatch')) {
