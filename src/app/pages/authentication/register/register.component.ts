@@ -40,11 +40,11 @@ export class RegisterComponent implements OnInit {
 
         this.authService
             .register({
-                first_name: this.form.value.first_name!,
-                last_name: this.form.value.last_name!,
-                email: this.form.value.email!,
-                password: this.form.value.password!,
-                password_confirmation: this.form.value.password_confirmation!,
+                first_name: this.form.value.first_name || '',
+                last_name: this.form.value.last_name || '',
+                email: this.form.value.email || '',
+                password: this.form.value.password || '',
+                password_confirmation: this.form.value.password_confirmation || '',
             })
             .subscribe({
                 next: () => {

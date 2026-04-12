@@ -1,9 +1,9 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export type RegisterForm = FormGroup<{
-    first_name: FormControl<string>;
-    last_name: FormControl<string>;
-    email: FormControl<string>;
-    password: FormControl<string>;
-    password_confirmation: FormControl<string>;
+    first_name: FormControl<string | null>;
+    last_name: FormControl<string | null>;
+    email: FormControl<string | null>;
+    password: FormControl<string | null>;
+    password_confirmation: FormControl<string | null>;
 }>;
