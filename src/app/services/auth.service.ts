@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { LoginCredentials } from '../interfaces/login-credentials.interface';
-import { User } from '../interfaces/user.interface';
+import { LoginCredentials, RegisterCredentials, User } from '../interfaces';
 import { environment } from '@environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -23,6 +22,22 @@ export class AuthService {
     public login(credentials: LoginCredentials): Observable<User> {
         this.isLoading.set(true);
         return this.http.post<User>(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
+            tap({
+                next: (user) => {
+                    this.currentUser.set(user);
+                    this.isLoading.set(false);
+                },
+                error: () => {
+                    this.isLoading.set(false);
+                },
+            }),
+        );
+    }
+
+    public register(credentials: RegisterCredentials): Observable<User> {
+        this.isLoading.set(true);
+
+        return this.http.post<User>(`${environment.apiUrl}/api/auth/register`, credentials).pipe(
             tap({
                 next: (user) => {
                     this.currentUser.set(user);
