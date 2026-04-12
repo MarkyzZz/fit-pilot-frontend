@@ -1,15 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterForm } from 'src/app/types';
-
-const passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-    const password = group.get('password')?.value;
-    const confirmation = group.get('password_confirmation')?.value;
-    return password && confirmation && password !== confirmation ? { passwordMismatch: true } : null;
-};
+import { passwordMatchValidator } from 'src/app/validators';
 
 @Component({
     selector: 'fp-register',
