@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
     protected readonly error = signal<string | null>(null);
     protected readonly showPassword = signal(false);
     protected readonly showPasswordConfirmation = signal(false);
+    protected readonly registrationSuccess = signal(false);
 
     public form: RegisterForm = new FormGroup(
         {
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit {
             })
             .subscribe({
                 next: () => {
-                    this.router.navigateByUrl('/dashboard');
+                    this.registrationSuccess.set(true);
                 },
                 error: (err: { error: { message: string } }) => {
                     this.error.set(err.error?.message ?? 'Registration failed. Please try again.');
