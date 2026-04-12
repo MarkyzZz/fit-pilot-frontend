@@ -1,9 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterForm } from 'src/app/types';
+
+const passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    const password = group.get('password')?.value;
+    const confirmation = group.get('password_confirmation')?.value;
+    return password && confirmation && password !== confirmation ? { passwordMismatch: true } : null;
+};
 
 @Component({
     selector: 'fp-register',
@@ -19,13 +25,16 @@ export class RegisterComponent implements OnInit {
     protected readonly csrfReady = this.authService.csrfReady;
     protected readonly error = signal<string | null>(null);
 
-    public form: RegisterForm = new FormGroup({
-        first_name: new FormControl('', [Validators.required]),
-        last_name: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-        password_confirmation: new FormControl('', [Validators.required]),
-    });
+    public form: RegisterForm = new FormGroup(
+        {
+            first_name: new FormControl('', [Validators.required]),
+            last_name: new FormControl('', [Validators.required]),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+            password_confirmation: new FormControl('', [Validators.required]),
+        },
+        { validators: passwordMatchValidator },
+    );
 
     public ngOnInit(): void {
         this.authService.initCsrf();
