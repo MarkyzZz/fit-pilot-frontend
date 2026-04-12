@@ -5,27 +5,32 @@
                 <div class="w-full p-10 flex flex-col justify-center align-center">
                     <h1 class="text-5xl text-center">Fit Pilot</h1>
 
-                    <form class="mt-8" [formGroup]="form" (ngSubmit)="submit()">
+                    <form (ngSubmit)="submit()" [formGroup]="form" class="mt-8">
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">First Name</mat-label>
+                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">First
+                                    Name
+                                </mat-label>
                                 <mat-form-field appearance="outline" class="w-full" color="primary">
-                                    <input matInput formControlName="first_name" autocomplete="given-name" />
+                                    <input autocomplete="given-name" formControlName="first_name" matInput />
                                     <mat-error>First name is required.</mat-error>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Last Name</mat-label>
+                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Last
+                                    Name
+                                </mat-label>
                                 <mat-form-field appearance="outline" class="w-full" color="primary">
-                                    <input matInput formControlName="last_name" autocomplete="family-name" />
+                                    <input autocomplete="family-name" formControlName="last_name" matInput />
                                     <mat-error>Last name is required.</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
 
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Email Address</mat-label>
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Email Address
+                        </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input matInput type="email" formControlName="email" autocomplete="email" />
+                            <input autocomplete="email" formControlName="email" matInput type="email" />
                             @if (form.controls.email.hasError('required')) {
                                 <mat-error>Email is required.</mat-error>
                             } @else if (form.controls.email.hasError('email')) {
@@ -33,9 +38,10 @@
                             }
                         </mat-form-field>
 
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password</mat-label>
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password
+                        </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input matInput type="password" formControlName="password" autocomplete="new-password" />
+                            <input autocomplete="new-password" formControlName="password" matInput type="password" />
                             @if (form.controls.password.hasError('required')) {
                                 <mat-error>Password is required.</mat-error>
                             } @else if (form.controls.password.hasError('minlength')) {
@@ -43,9 +49,11 @@
                             }
                         </mat-form-field>
 
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Confirm Password</mat-label>
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Confirm Password
+                        </mat-label>
                         <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input matInput type="password" formControlName="password_confirmation" autocomplete="new-password" />
+                            <input autocomplete="new-password" formControlName="password_confirmation" matInput
+                                   type="password" />
                             @if (form.controls.password_confirmation.hasError('required')) {
                                 <mat-error>Please confirm your password.</mat-error>
                             } @else if (form.hasError('passwordMismatch')) {
@@ -54,11 +62,11 @@
                         </mat-form-field>
 
                         <button
-                            type="submit"
+                            [disabled]="form.invalid || isLoading() || !csrfReady()"
                             class="w-full"
                             color="primary"
                             mat-flat-button
-                            [disabled]="form.invalid || isLoading() || !csrfReady()"
+                            type="submit"
                         >
                             Sign Up
                         </button>
@@ -69,7 +77,8 @@
                     </form>
 
                     <span class="flex flex-col sm:block font-medium text-center mt-6">Already have an account?
-                        <a [routerLink]="['/authentication/login']" class="text-primary font-medium text-sm hover:underline">
+                        <a [routerLink]="['/authentication/login']"
+                           class="text-primary font-medium text-sm hover:underline">
                             Sign In
                         </a>
                     </span>
@@ -77,7 +86,7 @@
             </div>
             <div class="lg:col-span-6 col-span-12 relative hidden lg:flex justify-center items-stretch bg-light">
                 <div class="flex items-center justify-center w-full">
-                    <img src="/assets/images/backgrounds/login-bg.svg" alt="register" class="img-fluid object-cover" />
+                    <img alt="register" class="img-fluid object-cover" src="/assets/images/backgrounds/login-bg.svg" />
                 </div>
             </div>
         </div>
