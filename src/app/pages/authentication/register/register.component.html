@@ -1,0 +1,68 @@
+<div class="flex h-screen w-full items-center justify-center overflow-hidden p-2">
+    <mat-card class="w-full sm:w-auto overflow-hidden auth-card mx-auto mb-0">
+        <div class="grid grid-cols-12 gap-6">
+            <div class="lg:col-span-6 col-span-12 flex items-stretch">
+                <div class="w-full p-10 flex flex-col justify-center align-center">
+                    <h1 class="text-5xl text-center">Fit Pilot</h1>
+
+                    <form class="mt-8" [formGroup]="form" (ngSubmit)="submit()">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">First Name</mat-label>
+                                <mat-form-field appearance="outline" class="w-full" color="primary">
+                                    <input matInput formControlName="first_name" autocomplete="given-name" />
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Last Name</mat-label>
+                                <mat-form-field appearance="outline" class="w-full" color="primary">
+                                    <input matInput formControlName="last_name" autocomplete="family-name" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Email Address</mat-label>
+                        <mat-form-field appearance="outline" class="w-full" color="primary">
+                            <input matInput type="email" formControlName="email" autocomplete="email" />
+                        </mat-form-field>
+
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password</mat-label>
+                        <mat-form-field appearance="outline" class="w-full" color="primary">
+                            <input matInput type="password" formControlName="password" autocomplete="new-password" />
+                        </mat-form-field>
+
+                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Confirm Password</mat-label>
+                        <mat-form-field appearance="outline" class="w-full" color="primary">
+                            <input matInput type="password" formControlName="password_confirmation" autocomplete="new-password" />
+                        </mat-form-field>
+
+                        <button
+                            type="submit"
+                            class="w-full"
+                            color="primary"
+                            mat-flat-button
+                            [disabled]="form.invalid || isLoading() || !csrfReady()"
+                        >
+                            Sign Up
+                        </button>
+
+                        @if (error()) {
+                            <mat-error class="text-sm mt-2 block">{{ error() }}</mat-error>
+                        }
+                    </form>
+
+                    <span class="flex flex-col sm:block font-medium text-center mt-6">Already have an account?
+                        <a [routerLink]="['/authentication/login']" class="text-primary font-medium text-sm hover:underline">
+                            Sign In
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="lg:col-span-6 col-span-12 relative hidden lg:flex justify-center items-stretch bg-light">
+                <div class="flex items-center justify-center w-full">
+                    <img src="/assets/images/backgrounds/login-bg.svg" alt="register" class="img-fluid object-cover" />
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>
