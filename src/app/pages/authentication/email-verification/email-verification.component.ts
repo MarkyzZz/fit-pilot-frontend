@@ -36,6 +36,12 @@ export class EmailVerificationComponent implements OnInit {
         const id = this.route.snapshot.paramMap.get('id') ?? '';
         const hash = this.route.snapshot.paramMap.get('hash') ?? '';
 
+        if (!id || !hash) {
+            this.status.set('error');
+
+            return;
+        }
+
         this.authService.verifyEmail(id, hash).subscribe({
             next: () => {
                 this.status.set('success');
