@@ -3,7 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { finalize, Observable, tap } from 'rxjs';
 import { LoginCredentials, User } from '../interfaces';
 import { environment } from '@environments/environment';
-import { RegisterCredentials } from '../types';
+import { ApiResponse, RegisterCredentials } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -20,15 +20,12 @@ export class AuthService {
         });
     }
 
-    public login(credentials: LoginCredentials): Observable<User> {
+    public login(credentials: LoginCredentials): Observable<ApiResponse<User>> {
         this.isLoading.set(true);
-        return this.http.post<User>(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
-            finalize(
-                () => this.isLoading.set(false)
-            ),
-            tap(
-                (user: User) => this.currentUser.set(user)
-            ),
+
+        return this.http.post<ApiResponse<User>>(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
+            tap((apiResponse: ApiResponse<User>) => this.currentUser.set(apiResponse.data!)),
+            finalize(() => this.isLoading.set(false)),
         );
     }
 
@@ -37,9 +34,7 @@ export class AuthService {
 
         return this.http
             .post<{ message: string }>(`${environment.apiUrl}/api/auth/register`, credentials)
-            .pipe(
-                finalize(() => this.isLoading.set(false))
-            );
+            .pipe(finalize(() => this.isLoading.set(false)));
     }
 
     public logout(): Observable<void> {
