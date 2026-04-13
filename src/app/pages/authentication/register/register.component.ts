@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatSuffix } from '@angular/material/form-field';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,7 +10,7 @@ import { passwordMatchValidator } from 'src/app/validators';
 
 @Component({
     selector: 'fp-register',
-    imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule, MatSuffix],
+    imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule, MatSuffix, NgTemplateOutlet],
     templateUrl: './register.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
