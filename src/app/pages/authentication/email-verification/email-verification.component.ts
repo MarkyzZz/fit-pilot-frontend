@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { VerificationStatus } from 'src/app/types/email-verification';
 import { interval, take } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { environment } from '@environments/environment';
 
 @Component({
     selector: 'fp-email-verification',
@@ -29,16 +30,23 @@ export class EmailVerificationComponent implements OnInit {
     }
 
     private startEmailVerification(): void {
-        const id = this.route.snapshot.paramMap.get('id') ?? '';
-        const hash = this.route.snapshot.paramMap.get('hash') ?? '';
+        const encodedUrl = this.route.snapshot.queryParamMap.get('url');
 
-        if (!id || !hash) {
+        if (!encodedUrl) {
             this.status.set('error');
 
             return;
         }
 
-        this.authService.verifyEmail(id, hash).subscribe({
+        const signedBackendUrl = decodeURIComponent(encodedUrl);
+
+        if (!this.isTrustedUrl(signedBackendUrl)) {
+            this.status.set('error');
+
+            return;
+        }
+
+        this.authService.verifyEmail(signedBackendUrl).subscribe({
             next: () => {
                 this.status.set('success');
                 this.startCountdown();
@@ -47,6 +55,17 @@ export class EmailVerificationComponent implements OnInit {
                 this.status.set('error');
             },
         });
+    }
+
+    private isTrustedUrl(url: string): boolean {
+        try {
+            const parsed = new URL(url);
+            const trusted = new URL(environment.apiUrl);
+
+            return parsed.origin === trusted.origin;
+        } catch {
+            return false;
+        }
     }
 
     private startCountdown(): void {

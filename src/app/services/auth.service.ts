@@ -45,7 +45,7 @@ export class AuthService {
         );
     }
 
-    public verifyEmail(id: string, hash: string): Observable<ApiResponse<User>> {
-        return this.http.get<ApiResponse<User>>(`${environment.apiUrl}/api/email/verify/${id}/${hash}`);
+    public verifyEmail(signedBackendUrl: string): Observable<ApiResponse<User>> {
+        return this.http.get<ApiResponse<User>>(signedBackendUrl);
     }
 }
