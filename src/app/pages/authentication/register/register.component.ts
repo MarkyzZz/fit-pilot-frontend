@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatSuffix } from '@angular/material/form-field';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
@@ -45,15 +45,13 @@ export class RegisterComponent implements OnInit {
 
         this.error.set(null);
 
-        this.authService
-            .register(this.form.getRawValue() as RegisterCredentials)
-            .subscribe({
-                next: () => {
-                    this.registrationSuccess.set(true);
-                },
-                error: (err: { error: { message: string } }) => {
-                    this.error.set(err.error?.message ?? 'Registration failed. Please try again.');
-                },
-            });
+        this.authService.register(this.form.getRawValue() as RegisterCredentials).subscribe({
+            next: () => {
+                this.registrationSuccess.set(true);
+            },
+            error: (err: { error: { message: string } }) => {
+                this.error.set(err.error?.message ?? 'Registration failed. Please try again.');
+            },
+        });
     }
 }
