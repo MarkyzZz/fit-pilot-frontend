@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoginForm } from 'src/app/types/login-form.type';
+import { LoginForm } from 'src/app/types';
 
 @Component({
     selector: 'fp-login',
