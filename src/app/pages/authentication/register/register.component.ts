@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
     protected readonly showPasswordConfirmation = signal(false);
     protected readonly registrationSuccess = signal(false);
 
-    public form: RegisterForm = new FormGroup(
+    protected form: RegisterForm = new FormGroup(
         {
             first_name: new FormControl('', [Validators.required]),
             last_name: new FormControl('', [Validators.required]),
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
         this.authService.initCsrf();
     }
 
-    public submit(): void {
+    protected submit(): void {
         if (this.form.invalid) {
             return;
         }
