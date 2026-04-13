@@ -45,11 +45,7 @@ export class AuthService {
         );
     }
 
-    public verifyEmail(id: string, hash: string): Observable<{ data: User }> {
-        return this.http.get<{ data: User }>(`${environment.apiUrl}/api/email/verify/${id}/${hash}`).pipe(
-            tap(({ data }) => {
-                this.currentUser.set(data);
-            }),
-        );
+    public verifyEmail(id: string, hash: string): Observable<ApiResponse<User>> {
+        return this.http.get<ApiResponse<User>>(`${environment.apiUrl}/api/email/verify/${id}/${hash}`);
     }
 }
