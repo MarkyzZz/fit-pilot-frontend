@@ -27,8 +27,8 @@
                     <ng-template #formTemplate>
                         <form (ngSubmit)="submit()" [formGroup]="form" class="mt-8 flex flex-col gap-y-2">
                             <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">First
+                                <div class="grid gap-y-2">
+                                    <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">First
                                         Name
                                     </mat-label>
                                     <mat-form-field appearance="outline" class="w-full" color="primary">
@@ -36,8 +36,8 @@
                                         <mat-error>First name is required.</mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div>
-                                    <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Last
+                                <div class="grid gap-y-2">
+                                    <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Last
                                         Name
                                     </mat-label>
                                     <mat-form-field appearance="outline" class="w-full" color="primary">
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
 
-                            <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Email Address
+                            <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Email Address
                             </mat-label>
                             <mat-form-field appearance="outline" class="w-full" color="primary">
                                 <input autocomplete="email" formControlName="email" matInput type="email" />
@@ -58,7 +58,7 @@
                                 }
                             </mat-form-field>
 
-                            <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password
+                            <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Password
                             </mat-label>
                             <mat-form-field appearance="outline" class="w-full" color="primary">
                                 <input [type]="showPassword() ? 'text' : 'password'"
@@ -78,7 +78,7 @@
                                 }
                             </mat-form-field>
 
-                            <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Confirm Password
+                            <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Confirm Password
                             </mat-label>
                             <mat-form-field appearance="outline" class="w-full" color="primary">
                                 <input [type]="showPasswordConfirmation() ? 'text' : 'password'"
@@ -99,13 +99,15 @@
                                 }
                             </mat-form-field>
 
-                            @if (form.hasError('passwordMismatch')
-                                && form.controls.password.touched
-                                && form.controls.password_confirmation.touched
-                                && !passwordConfirmationFocused()
+                            <div class="h-5">
+                                @if (form.hasError('passwordMismatch')
+                                    && form.controls.password.touched
+                                    && form.controls.password_confirmation.touched
+                                    && !passwordConfirmationFocused()
                                 ) {
-                                <mat-error class="text-sm">Passwords do not match.</mat-error>
-                            }
+                                    <mat-error class="text-sm">Passwords do not match.</mat-error>
+                                }
+                            </div>
 
                             <button
                                 [disabled]="form.invalid || isLoading() || !csrfReady()"
