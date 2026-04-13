@@ -14,7 +14,6 @@ import { passwordMatchValidator } from 'src/app/validators';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit {
-    private readonly router = inject(Router);
     private readonly authService = inject(AuthService);
 
     protected readonly isLoading = this.authService.isLoading;
