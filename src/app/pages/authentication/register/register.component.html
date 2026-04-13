@@ -84,7 +84,9 @@
                                 <input [type]="showPasswordConfirmation() ? 'text' : 'password'"
                                        autocomplete="new-password"
                                        formControlName="password_confirmation"
-                                       matInput />
+                                       matInput
+                                       (focus)="passwordConfirmationFocused.set(true)"
+                                       (blur)="passwordConfirmationFocused.set(false)" />
                                 <button (click)="showPasswordConfirmation.set(!showPasswordConfirmation())"
                                         [attr.aria-label]="showPasswordConfirmation() ? 'Hide password confirmation' : 'Show password confirmation'"
                                         mat-icon-button
@@ -94,10 +96,16 @@
                                 </button>
                                 @if (form.controls.password_confirmation.hasError('required')) {
                                     <mat-error>Please confirm your password.</mat-error>
-                                } @else if (form.hasError('passwordMismatch')) {
-                                    <mat-error>Passwords do not match.</mat-error>
                                 }
                             </mat-form-field>
+
+                            @if (form.hasError('passwordMismatch')
+                                && form.controls.password.touched
+                                && form.controls.password_confirmation.touched
+                                && !passwordConfirmationFocused()
+                                ) {
+                                <mat-error class="text-sm">Passwords do not match.</mat-error>
+                            }
 
                             <button
                                 [disabled]="form.invalid || isLoading() || !csrfReady()"

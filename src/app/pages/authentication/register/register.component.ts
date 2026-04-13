@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
     protected readonly showPassword = signal(false);
     protected readonly showPasswordConfirmation = signal(false);
     protected readonly registrationSuccess = signal(false);
+    protected readonly passwordConfirmationFocused = signal(false);
 
     protected form: RegisterForm = new FormGroup(
         {
