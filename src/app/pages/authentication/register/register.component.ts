@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MatSuffix } from '@angular/material/form-field';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { RegisterForm } from 'src/app/types';
+import { RegisterCredentials, RegisterForm } from 'src/app/types';
 import { passwordMatchValidator } from 'src/app/validators';
 
 @Component({
@@ -46,13 +46,7 @@ export class RegisterComponent implements OnInit {
         this.error.set(null);
 
         this.authService
-            .register({
-                first_name: this.form.value.first_name || '',
-                last_name: this.form.value.last_name || '',
-                email: this.form.value.email || '',
-                password: this.form.value.password || '',
-                password_confirmation: this.form.value.password_confirmation || '',
-            })
+            .register(this.form.getRawValue() as RegisterCredentials)
             .subscribe({
                 next: () => {
                     this.registrationSuccess.set(true);
