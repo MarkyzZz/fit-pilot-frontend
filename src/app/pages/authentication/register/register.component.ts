@@ -1,19 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
+import { MatSuffix } from '@angular/material/form-field';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
-import { RegisterForm } from 'src/app/types';
+import { RegisterCredentials, RegisterForm } from 'src/app/types';
 import { passwordMatchValidator } from 'src/app/validators';
 
 @Component({
     selector: 'fp-register',
-    imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
+    imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule, MatSuffix, NgTemplateOutlet],
     templateUrl: './register.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit {
-    private readonly router = inject(Router);
     private readonly authService = inject(AuthService);
 
     protected readonly isLoading = this.authService.isLoading;
@@ -22,8 +23,9 @@ export class RegisterComponent implements OnInit {
     protected readonly showPassword = signal(false);
     protected readonly showPasswordConfirmation = signal(false);
     protected readonly registrationSuccess = signal(false);
+    protected readonly passwordConfirmationFocused = signal(false);
 
-    public form: RegisterForm = new FormGroup(
+    protected form: RegisterForm = new FormGroup(
         {
             first_name: new FormControl('', [Validators.required]),
             last_name: new FormControl('', [Validators.required]),
@@ -38,28 +40,20 @@ export class RegisterComponent implements OnInit {
         this.authService.initCsrf();
     }
 
-    public submit(): void {
+    protected submit(): void {
         if (this.form.invalid) {
             return;
         }
 
         this.error.set(null);
 
-        this.authService
-            .register({
-                first_name: this.form.value.first_name || '',
-                last_name: this.form.value.last_name || '',
-                email: this.form.value.email || '',
-                password: this.form.value.password || '',
-                password_confirmation: this.form.value.password_confirmation || '',
-            })
-            .subscribe({
-                next: () => {
-                    this.registrationSuccess.set(true);
-                },
-                error: (err: { error: { message: string } }) => {
-                    this.error.set(err.error?.message ?? 'Registration failed. Please try again.');
-                },
-            });
+        this.authService.register(this.form.getRawValue() as RegisterCredentials).subscribe({
+            next: () => {
+                this.registrationSuccess.set(true);
+            },
+            error: (err: { error: { message: string } }) => {
+                this.error.set(err.error?.message ?? 'Registration failed. Please try again.');
+            },
+        });
     }
 }

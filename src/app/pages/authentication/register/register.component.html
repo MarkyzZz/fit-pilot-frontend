@@ -6,6 +6,12 @@
                     <h1 class="text-5xl text-center">Fit Pilot</h1>
 
                     @if (registrationSuccess()) {
+                        <ng-container *ngTemplateOutlet="successTemplate" />
+                    } @else {
+                        <ng-container *ngTemplateOutlet="formTemplate" />
+                    }
+
+                    <ng-template #successTemplate>
                         <div class="mt-8 flex flex-col items-center gap-y-4 text-center" role="status" aria-live="polite">
                             <mat-icon class="text-green-500 !text-5xl !w-12 !h-12">mark_email_read</mat-icon>
                             <h2 class="text-xl font-semibold">Account created!</h2>
@@ -16,103 +22,115 @@
                                 Go to Sign In
                             </a>
                         </div>
-                    } @else {
-                    <form (ngSubmit)="submit()" [formGroup]="form" class="mt-8 flex flex-col gap-y-2">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">First
-                                    Name
-                                </mat-label>
-                                <mat-form-field appearance="outline" class="w-full" color="primary">
-                                    <input autocomplete="given-name" formControlName="first_name" matInput />
-                                    <mat-error>First name is required.</mat-error>
-                                </mat-form-field>
+                    </ng-template>
+
+                    <ng-template #formTemplate>
+                        <form (ngSubmit)="submit()" [formGroup]="form" class="mt-8 flex flex-col gap-y-2">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="grid gap-y-2">
+                                    <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">First
+                                        Name
+                                    </mat-label>
+                                    <mat-form-field appearance="outline" class="w-full" color="primary">
+                                        <input autocomplete="given-name" formControlName="first_name" matInput />
+                                        <mat-error>First name is required.</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="grid gap-y-2">
+                                    <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Last
+                                        Name
+                                    </mat-label>
+                                    <mat-form-field appearance="outline" class="w-full" color="primary">
+                                        <input autocomplete="family-name" formControlName="last_name" matInput />
+                                        <mat-error>Last name is required.</mat-error>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                            <div>
-                                <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Last
-                                    Name
-                                </mat-label>
-                                <mat-form-field appearance="outline" class="w-full" color="primary">
-                                    <input autocomplete="family-name" formControlName="last_name" matInput />
-                                    <mat-error>Last name is required.</mat-error>
-                                </mat-form-field>
+
+                            <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Email Address
+                            </mat-label>
+                            <mat-form-field appearance="outline" class="w-full" color="primary">
+                                <input autocomplete="email" formControlName="email" matInput type="email" />
+                                @if (form.controls.email.hasError('required')) {
+                                    <mat-error>Email is required.</mat-error>
+                                } @else if (form.controls.email.hasError('email')) {
+                                    <mat-error>Enter a valid email address.</mat-error>
+                                }
+                            </mat-form-field>
+
+                            <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Password
+                            </mat-label>
+                            <mat-form-field appearance="outline" class="w-full" color="primary">
+                                <input [type]="showPassword() ? 'text' : 'password'"
+                                       autocomplete="new-password"
+                                       formControlName="password"
+                                       matInput />
+                                <button (click)="showPassword.set(!showPassword())"
+                                        [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                                        mat-icon-button matSuffix
+                                        type="button">
+                                    <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
+                                @if (form.controls.password.hasError('required')) {
+                                    <mat-error>Password is required.</mat-error>
+                                } @else if (form.controls.password.hasError('minlength')) {
+                                    <mat-error>Password must be at least 8 characters.</mat-error>
+                                }
+                            </mat-form-field>
+
+                            <mat-label class="mat-subtitle-2 text-sm font-semibold block text-start">Confirm Password
+                            </mat-label>
+                            <mat-form-field appearance="outline" class="w-full" color="primary">
+                                <input [type]="showPasswordConfirmation() ? 'text' : 'password'"
+                                       autocomplete="new-password"
+                                       formControlName="password_confirmation"
+                                       matInput
+                                       (focus)="passwordConfirmationFocused.set(true)"
+                                       (blur)="passwordConfirmationFocused.set(false)" />
+                                <button (click)="showPasswordConfirmation.set(!showPasswordConfirmation())"
+                                        [attr.aria-label]="showPasswordConfirmation() ? 'Hide password confirmation' : 'Show password confirmation'"
+                                        mat-icon-button
+                                        matSuffix
+                                        type="button">
+                                    <mat-icon>{{ showPasswordConfirmation() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                </button>
+                                @if (form.controls.password_confirmation.hasError('required')) {
+                                    <mat-error>Please confirm your password.</mat-error>
+                                }
+                            </mat-form-field>
+
+                            <div class="h-5">
+                                @if (form.hasError('passwordMismatch')
+                                    && form.controls.password.touched
+                                    && form.controls.password_confirmation.touched
+                                    && !passwordConfirmationFocused()
+                                ) {
+                                    <mat-error class="text-sm">Passwords do not match.</mat-error>
+                                }
                             </div>
-                        </div>
 
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Email Address
-                        </mat-label>
-                        <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input autocomplete="email" formControlName="email" matInput type="email" />
-                            @if (form.controls.email.hasError('required')) {
-                                <mat-error>Email is required.</mat-error>
-                            } @else if (form.controls.email.hasError('email')) {
-                                <mat-error>Enter a valid email address.</mat-error>
-                            }
-                        </mat-form-field>
-
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Password
-                        </mat-label>
-                        <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input [type]="showPassword() ? 'text' : 'password'"
-                                   autocomplete="new-password"
-                                   formControlName="password"
-                                   matInput />
-                            <button (click)="showPassword.set(!showPassword())"
-                                    [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
-                                    mat-icon-button matSuffix
-                                    type="button">
-                                <mat-icon>{{ showPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            <button
+                                [disabled]="form.invalid || isLoading() || !csrfReady()"
+                                class="w-full"
+                                color="primary"
+                                mat-flat-button
+                                type="submit"
+                            >
+                                Sign Up
                             </button>
-                            @if (form.controls.password.hasError('required')) {
-                                <mat-error>Password is required.</mat-error>
-                            } @else if (form.controls.password.hasError('minlength')) {
-                                <mat-error>Password must be at least 8 characters.</mat-error>
+
+                            @if (error()) {
+                                <mat-error class="text-sm mt-2 block">{{ error() }}</mat-error>
                             }
-                        </mat-form-field>
+                        </form>
 
-                        <mat-label class="mat-subtitle-2 text-sm font-semibold mb-3 block text-start">Confirm Password
-                        </mat-label>
-                        <mat-form-field appearance="outline" class="w-full" color="primary">
-                            <input [type]="showPasswordConfirmation() ? 'text' : 'password'"
-                                   autocomplete="new-password"
-                                   formControlName="password_confirmation"
-                                   matInput />
-                            <button (click)="showPasswordConfirmation.set(!showPasswordConfirmation())"
-                                    [attr.aria-label]="showPasswordConfirmation() ? 'Hide password confirmation' : 'Show password confirmation'"
-                                    mat-icon-button
-                                    matSuffix
-                                    type="button">
-                                <mat-icon>{{ showPasswordConfirmation() ? 'visibility_off' : 'visibility' }}</mat-icon>
-                            </button>
-                            @if (form.controls.password_confirmation.hasError('required')) {
-                                <mat-error>Please confirm your password.</mat-error>
-                            } @else if (form.hasError('passwordMismatch')) {
-                                <mat-error>Passwords do not match.</mat-error>
-                            }
-                        </mat-form-field>
-
-                        <button
-                            [disabled]="form.invalid || isLoading() || !csrfReady()"
-                            class="w-full"
-                            color="primary"
-                            mat-flat-button
-                            type="submit"
-                        >
-                            Sign Up
-                        </button>
-
-                        @if (error()) {
-                            <mat-error class="text-sm mt-2 block">{{ error() }}</mat-error>
-                        }
-                    </form>
-
-                    <span class="flex flex-col sm:block font-medium text-center mt-6">Already have an account?
-                        <a [routerLink]="['/authentication/login']"
-                           class="text-primary font-medium text-sm hover:underline">
-                            Sign In
-                        </a>
-                    </span>
-                    }
+                        <span class="flex flex-col sm:block font-medium text-center mt-6">Already have an account?
+                            <a [routerLink]="['/authentication/login']"
+                               class="text-primary font-medium text-sm hover:underline">
+                                Sign In
+                            </a>
+                        </span>
+                    </ng-template>
                 </div>
             </div>
             <div class="lg:col-span-6 col-span-12 relative hidden lg:flex justify-center items-stretch bg-light">

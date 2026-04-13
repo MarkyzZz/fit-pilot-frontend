@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { LoginCredentials, RegisterCredentials, User } from '../interfaces';
+import { finalize, Observable, tap } from 'rxjs';
+import { LoginCredentials, User } from '../interfaces';
 import { environment } from '@environments/environment';
+import { ApiResponse, RegisterCredentials } from '../types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,35 +20,21 @@ export class AuthService {
         });
     }
 
-    public login(credentials: LoginCredentials): Observable<User> {
+    public login(credentials: LoginCredentials): Observable<ApiResponse<User>> {
         this.isLoading.set(true);
-        return this.http.post<User>(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
-            tap({
-                next: (user) => {
-                    this.currentUser.set(user);
-                    this.isLoading.set(false);
-                },
-                error: () => {
-                    this.isLoading.set(false);
-                },
-            }),
+
+        return this.http.post<ApiResponse<User>>(`${environment.apiUrl}/api/auth/login`, credentials).pipe(
+            tap((apiResponse: ApiResponse<User>) => this.currentUser.set(apiResponse.data!)),
+            finalize(() => this.isLoading.set(false)),
         );
     }
 
-    public register(credentials: RegisterCredentials): Observable<User> {
+    public register(credentials: RegisterCredentials): Observable<{ message: string }> {
         this.isLoading.set(true);
 
-        return this.http.post<User>(`${environment.apiUrl}/api/auth/register`, credentials).pipe(
-            tap({
-                next: (user) => {
-                    this.currentUser.set(user);
-                    this.isLoading.set(false);
-                },
-                error: () => {
-                    this.isLoading.set(false);
-                },
-            }),
-        );
+        return this.http
+            .post<{ message: string }>(`${environment.apiUrl}/api/auth/register`, credentials)
+            .pipe(finalize(() => this.isLoading.set(false)));
     }
 
     public logout(): Observable<void> {
