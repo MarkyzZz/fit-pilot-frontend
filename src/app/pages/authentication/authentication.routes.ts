@@ -15,6 +15,13 @@ export const AuthenticationRoutes: Routes = [
                 path: 'register',
                 component: RegisterComponent,
             },
+            {
+                path: 'verify-email/:id/:hash',
+                loadComponent: () =>
+                    import('./email-verification/email-verification.component').then(
+                        (m) => m.EmailVerificationComponent,
+                    ),
+            },
         ],
     },
 ];

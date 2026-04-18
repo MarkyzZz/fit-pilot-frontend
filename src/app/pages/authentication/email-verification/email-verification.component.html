@@ -1,0 +1,39 @@
+<div class="flex h-screen w-full items-center justify-center overflow-hidden p-2">
+    <mat-card class="w-full sm:w-96 overflow-hidden mx-auto">
+        <mat-card-content class="p-10 flex flex-col items-center justify-center text-center gap-6">
+
+            <h1 class="text-5xl">Verify your email</h1>
+
+            @if (isLoading()) {
+                <mat-spinner diameter="48" />
+                <p aria-live="polite"
+                   class="text-base text-gray-500"
+                   role="status">Verifying your email address...
+                </p>
+            }
+
+            @if (isSuccess()) {
+                <mat-icon aria-hidden="true"
+                          class="text-green-500 !text-5xl !w-12 !h-12">
+                    check_circle
+                </mat-icon>
+                <p class="text-base font-medium">
+                    Your account has been successfully verified.<br />
+                    Redirecting to dashboard in {{ countdown() }}...
+                </p>
+            }
+
+            @if (isError()) {
+                <mat-icon aria-hidden="true"
+                          class="text-red-500 !text-5xl !w-12 !h-12">
+                    error
+                </mat-icon>
+                <p class="text-base font-medium">
+                    This verification link has expired or is invalid.<br />
+                    Please request a new one.
+                </p>
+            }
+
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -44,4 +44,8 @@ export class AuthService {
             }),
         );
     }
+
+    public verifyEmail(signedBackendUrl: string): Observable<ApiResponse<User>> {
+        return this.http.get<ApiResponse<User>>(signedBackendUrl);
+    }
 }
