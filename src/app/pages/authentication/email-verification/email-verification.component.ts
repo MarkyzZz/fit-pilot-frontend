@@ -30,21 +30,19 @@ export class EmailVerificationComponent implements OnInit {
     }
 
     private startEmailVerification(): void {
-        const encodedUrl = this.route.snapshot.queryParamMap.get('url');
+        const snapshot = this.route.snapshot;
+        const id = snapshot.paramMap.get('id') ?? '';
+        const hash = snapshot.paramMap.get('hash') ?? '';
+        const expires = snapshot.queryParamMap.get('expires') ?? '';
+        const signature = snapshot.queryParamMap.get('signature') ?? '';
 
-        if (!encodedUrl) {
+        if (!id || !hash || !expires || !signature) {
             this.status.set('error');
 
             return;
         }
 
-        const signedBackendUrl = decodeURIComponent(encodedUrl);
-
-        if (!this.isTrustedUrl(signedBackendUrl)) {
-            this.status.set('error');
-
-            return;
-        }
+        const signedBackendUrl = this.buildEmailVerificationUrl(id, hash, expires, signature);
 
         this.authService.verifyEmail(signedBackendUrl).subscribe({
             next: () => {
@@ -57,15 +55,8 @@ export class EmailVerificationComponent implements OnInit {
         });
     }
 
-    private isTrustedUrl(url: string): boolean {
-        try {
-            const parsed = new URL(url);
-            const trusted = new URL(environment.apiUrl);
-
-            return parsed.origin === trusted.origin;
-        } catch {
-            return false;
-        }
+    private buildEmailVerificationUrl(id: string, hash: string, expires: string, signature: string): string {
+        return  `${environment.apiUrl}/api/email/verify/${id}/${hash}?expires=${expires}&signature=${signature}`;
     }
 
     private startCountdown(): void {
