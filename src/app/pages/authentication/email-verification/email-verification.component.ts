@@ -2,10 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnIni
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserStorageService } from 'src/app/services/user-storage.service';
 import { VerificationStatus } from 'src/app/types/email-verification';
 import { interval, take } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { environment } from '@environments/environment';
+import { ApiResponse } from 'src/app/types';
+import { User } from 'src/app/interfaces';
 
 @Component({
     selector: 'fp-email-verification',
@@ -17,6 +20,7 @@ export class EmailVerificationComponent implements OnInit {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
     private readonly authService = inject(AuthService);
+    private readonly userStorage = inject(UserStorageService);
     private readonly destroyRef = inject(DestroyRef);
 
     protected readonly status = signal<VerificationStatus>('loading');
@@ -45,7 +49,11 @@ export class EmailVerificationComponent implements OnInit {
         const signedBackendUrl = this.buildEmailVerificationUrl(id, hash, expires, signature);
 
         this.authService.verifyEmail(signedBackendUrl).subscribe({
-            next: () => {
+            next: (response: ApiResponse<User>) => {
+                if (response.data) {
+                    this.authService.currentUser.set(response.data);
+                    this.userStorage.set(response.data);
+                }
                 this.status.set('success');
                 this.startCountdown();
             },
