@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { finalize, Observable, tap } from 'rxjs';
 import { LoginCredentials, User } from '../interfaces';
 import { environment } from '@environments/environment';
@@ -12,6 +12,11 @@ export class AuthService {
     public readonly currentUser = signal<User | null>(null);
     public readonly isLoading = signal(false);
     public readonly csrfReady = signal(false);
+    public readonly isEmailVerified = computed(() => {
+        const user: User|null = this.currentUser();
+
+        return user !== null && user.verified;
+    });
 
     public initCsrf(): void {
         this.http.get<void>(`${environment.apiUrl}/sanctum/csrf-cookie`).subscribe({
@@ -47,5 +52,9 @@ export class AuthService {
 
     public verifyEmail(signedBackendUrl: string): Observable<ApiResponse<User>> {
         return this.http.get<ApiResponse<User>>(signedBackendUrl);
+    }
+
+    public resendVerificationEmail(): Observable<{ message: string }> {
+        return this.http.post<{ message: string }>(`${environment.apiUrl}/api/auth/email/resend`, {});
     }
 }
