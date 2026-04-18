@@ -22,6 +22,13 @@ export const AuthenticationRoutes: Routes = [
                         (m) => m.EmailVerificationComponent,
                     ),
             },
+            {
+                path: 'verify-email-notice',
+                loadComponent: () =>
+                    import('./email-verification-notice/email-verification-notice.component').then(
+                        (m) => m.EmailVerificationNoticeComponent,
+                    ),
+            },
         ],
     },
 ];
