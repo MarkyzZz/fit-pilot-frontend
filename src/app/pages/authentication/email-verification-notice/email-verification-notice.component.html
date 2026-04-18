@@ -1,0 +1,46 @@
+<div class="flex h-screen w-full items-center justify-center overflow-hidden p-2">
+    <mat-card class="w-full sm:w-96 overflow-hidden mx-auto">
+        <mat-card-content class="p-10 flex flex-col items-center justify-center text-center gap-6">
+
+            <mat-icon aria-hidden="true" class="text-yellow-500 !text-5xl !w-12 !h-12">mark_email_unread</mat-icon>
+
+            <h1 class="text-2xl font-semibold">Verify your email address</h1>
+
+            <p class="text-base text-gray-500">
+                We sent a verification link to your email. Please check your inbox and follow the link to activate
+                your account.
+            </p>
+
+            <div class="flex flex-col items-center gap-3 w-full">
+                <p class="text-sm text-gray-500">Didn't receive it or did it expire?</p>
+
+                <button mat-flat-button
+                        color="primary"
+                        class="w-full"
+                        [disabled]="isDisabled()"
+                        (click)="resend()">
+                    Resend verification email
+                </button>
+
+                @if (isSent() && cooldownRemaining() > 0) {
+                    <p aria-live="polite" class="text-sm text-green-600" role="status">
+                        Email sent! Check your inbox.
+                    </p>
+                }
+
+                @if (!isSent() && cooldownRemaining() > 0) {
+                    <p aria-live="polite" class="text-sm text-gray-500" role="status">
+                        Please wait {{ cooldownRemaining() }}s before requesting another email.
+                    </p>
+                }
+
+                @if (errorMessage()) {
+                    <p aria-live="assertive" class="text-sm text-red-500" role="alert">
+                        {{ errorMessage() }}
+                    </p>
+                }
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</div>
