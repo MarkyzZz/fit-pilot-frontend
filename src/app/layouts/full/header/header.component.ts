@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { AppSettings } from 'src/app/config';
+import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -20,14 +21,15 @@ export class HeaderComponent {
     @Output() public readonly toggleMobileNav = new EventEmitter<void>();
     @Output() public readonly toggleMobileFilterNav = new EventEmitter<void>();
     @Output() public readonly toggleCollapsed = new EventEmitter<void>();
-    @Output() public readonly optionsChange = new EventEmitter<AppSettings>();
+    @Output() public readonly optionsChange = new EventEmitter<AppSettings>();private readonly authService = inject(AuthService);
 
     private readonly authService = inject(AuthService);
     private readonly router = inject(Router);
 
     public logout(): void {
-        this.authService.logout().subscribe({
-            next: () => this.router.navigate(['/authentication/login']),
-        });
+        this.authService
+            .logout()
+            .pipe(finalize(() => this.router.navigate(['/authentication/login'])))
+            .subscribe();
     }
 }

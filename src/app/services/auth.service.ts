@@ -50,8 +50,9 @@ export class AuthService {
     public logout(): Observable<void> {
         return this.http.get<void>(`${environment.apiUrl}/sanctum/csrf-cookie`).pipe(
             switchMap(() => this.http.post<void>(`${environment.apiUrl}/api/auth/logout`, {})),
-            tap(() => {
+            finalize(() => {
                 this.currentUser.set(null);
+
                 this.userStorage.clear();
             }),
         );
