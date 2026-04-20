@@ -46,7 +46,7 @@
         </button>
 
         <div class="px-3 mt-3">
-            <a [routerLink]="['/authentication/login']" class="w-full" mat-stroked-button>Logout</a>
+            <button (click)="logout()" class="w-full" mat-stroked-button>Logout</button>
         </div>
     </mat-menu>
 </mat-toolbar>
