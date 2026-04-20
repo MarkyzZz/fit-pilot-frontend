@@ -21,7 +21,7 @@ export class HeaderComponent {
     @Output() public readonly toggleMobileNav = new EventEmitter<void>();
     @Output() public readonly toggleMobileFilterNav = new EventEmitter<void>();
     @Output() public readonly toggleCollapsed = new EventEmitter<void>();
-    @Output() public readonly optionsChange = new EventEmitter<AppSettings>();private readonly authService = inject(AuthService);
+    @Output() public readonly optionsChange = new EventEmitter<AppSettings>();
 
     private readonly authService = inject(AuthService);
     private readonly router = inject(Router);
