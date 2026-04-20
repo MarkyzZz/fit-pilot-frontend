@@ -8,21 +8,19 @@ import { AppSettings } from 'src/app/config';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-    selector: 'app-header',
+    selector: 'fp-header',
     imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule],
     templateUrl: './header.component.html',
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
-    @Input() showToggle = true;
-    @Input() toggleChecked = false;
-    @Output() toggleMobileNav = new EventEmitter<void>();
-    @Output() toggleMobileFilterNav = new EventEmitter<void>();
-    @Output() toggleCollapsed = new EventEmitter<void>();
+    @Input() public showToggle = true;
+    @Input() public toggleChecked = false;
 
-    showFiller = false;
-
-    @Output() optionsChange = new EventEmitter<AppSettings>();
+    @Output() public readonly toggleMobileNav = new EventEmitter<void>();
+    @Output() public readonly toggleMobileFilterNav = new EventEmitter<void>();
+    @Output() public readonly toggleCollapsed = new EventEmitter<void>();
+    @Output() public readonly optionsChange = new EventEmitter<AppSettings>();
 
     private readonly authService = inject(AuthService);
     private readonly router = inject(Router);
