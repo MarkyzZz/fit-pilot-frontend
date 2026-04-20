@@ -18,8 +18,8 @@
 
         <mat-sidenav-content #content class="contentWrapper">
 
-            <app-header (toggleCollapsed)="toggleCollapsed()" (toggleMobileNav)="sidenav.toggle()"
-                        [showToggle]="!isOver"></app-header>
+            <fp-header (toggleCollapsed)="toggleCollapsed()" (toggleMobileNav)="sidenav.toggle()"
+                        [showToggle]="!isOver"></fp-header>
 
             <main class="pageWrapper maxWidth">
                 <router-outlet></router-outlet>
