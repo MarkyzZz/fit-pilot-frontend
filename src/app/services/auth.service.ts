@@ -49,8 +49,9 @@ export class AuthService {
 
     public logout(): Observable<void> {
         return this.http.post<void>(`${environment.apiUrl}/api/auth/logout`, {}).pipe(
-            tap(() => {
+            finalize(() => {
                 this.currentUser.set(null);
+
                 this.userStorage.clear();
             }),
         );
