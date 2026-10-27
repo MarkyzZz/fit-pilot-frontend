@@ -1,4 +1,12 @@
-import { Component, EventEmitter, inject, Input, Output, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    inject,
+    Input,
+    Output,
+    ViewEncapsulation,
+} from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from 'src/app/material.module';
 import { Router, RouterModule } from '@angular/router';
@@ -12,6 +20,7 @@ import { finalize } from 'rxjs';
     selector: 'app-header',
     imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule],
     templateUrl: './header.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {

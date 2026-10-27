@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CoreService } from 'src/app/services/core.service';
 
 import { RouterOutlet } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 
 @Component({
-  selector: 'app-blank',
-  templateUrl: './blank.component.html',
-  styleUrls: [],
-  imports: [RouterOutlet, MaterialModule],
+    selector: 'app-blank',
+    templateUrl: './blank.component.html',
+    styleUrls: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [RouterOutlet, MaterialModule],
 })
 export class BlankComponent {
-  private htmlElement!: HTMLHtmlElement;
+    private htmlElement!: HTMLHtmlElement;
 
-  options = this.settings.getOptions();
+    options = this.settings.getOptions();
 
-  constructor(private settings: CoreService) {
-    this.htmlElement = document.querySelector('html')!;
-  }
+    constructor(private settings: CoreService) {
+        this.htmlElement = document.querySelector('html')!;
+    }
 }
