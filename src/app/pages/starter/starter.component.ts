@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { AppRevenueUpdatesComponent } from 'src/app/components/revenue-updates/revenue-updates.component';
 import { AppYearlyBreakupComponent } from 'src/app/components/yearly-breakup/yearly-breakup.component';
@@ -8,17 +8,18 @@ import { AppTopProjectsComponent } from 'src/app/components/top-projects/top-pro
 import { AppBlogCardsComponent } from 'src/app/components/blog-card/blog-card.component';
 
 @Component({
-  selector: 'app-starter',
-  imports: [
-    MaterialModule,
-    AppRevenueUpdatesComponent,
-    AppYearlyBreakupComponent,
-    AppMonthlyEarningsComponent,
-    AppRecentTransactionsComponent,
-    AppTopProjectsComponent,
-    AppBlogCardsComponent
-  ],
-  templateUrl: './starter.component.html',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-starter',
+    imports: [
+        MaterialModule,
+        AppRevenueUpdatesComponent,
+        AppYearlyBreakupComponent,
+        AppMonthlyEarningsComponent,
+        AppRecentTransactionsComponent,
+        AppTopProjectsComponent,
+        AppBlogCardsComponent,
+    ],
+    templateUrl: './starter.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    encapsulation: ViewEncapsulation.None,
 })
-export class StarterComponent { }
+export class StarterComponent {}
