@@ -1,10 +1,10 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { sanctumInterceptor } from './interceptors/sanctum.interceptor';
 import { routes } from './app.routes';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideClientHydration } from '@angular/platform-browser';
+import { provideClientHydration, withNoIncrementalHydration } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -30,10 +30,8 @@ export const appConfig: ApplicationConfig = {
             }),
             withComponentInputBinding(),
         ),
-        provideHttpClient(
-            withInterceptors([sanctumInterceptor]),
-        ),
-        provideClientHydration(),
+        provideHttpClient(withXhr(), withInterceptors([sanctumInterceptor])),
+        provideClientHydration(withNoIncrementalHydration()),
         provideAnimationsAsync(),
         importProvidersFrom(
             FormsModule,

@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-badge',
-  templateUrl: './badge.component.html',
-  imports: [MatBadgeModule, MatButtonModule, MatIconModule, MatCardModule],
+    selector: 'app-badge',
+    templateUrl: './badge.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [MatBadgeModule, MatButtonModule, MatIconModule, MatCardModule],
 })
 export class AppBadgeComponent implements OnInit {
-  constructor() {}
+    constructor() {}
 
-  ngOnInit(): void {}
+    ngOnInit(): void {}
 
-  hidden = false;
+    hidden = false;
 
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
-  }
+    toggleBadgeVisibility() {
+        this.hidden = !this.hidden;
+    }
 }
