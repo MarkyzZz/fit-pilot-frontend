@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { authGuard } from './guards/auth.guard';
 import { emailVerifiedGuard } from './guards/email-verified.guard';
 
 export const routes: Routes = [
     {
         path: '',
         component: FullComponent,
-        canActivate: [emailVerifiedGuard],
+        canActivate: [authGuard, emailVerifiedGuard],
         children: [
             {
                 path: '',
