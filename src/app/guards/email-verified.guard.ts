@@ -8,11 +8,8 @@ export const emailVerifiedGuard: CanActivateFn = () => {
     const router = inject(Router);
     const user: User | null = authService.currentUser();
 
-    if (!user) {
-        return router.createUrlTree(['/authentication/login']);
-    }
-
-    if (!user.verified) {
+    // authGuard runs first; user is guaranteed non-null here
+    if (!user?.verified) {
         return router.createUrlTree(['/authentication/verify-email-notice']);
     }
 
