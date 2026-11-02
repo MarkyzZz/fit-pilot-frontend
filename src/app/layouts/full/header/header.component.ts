@@ -3,8 +3,11 @@ import {
     Component,
     EventEmitter,
     inject,
+    input,
     Input,
-    Output,
+    InputSignal,
+    output,
+    Output, OutputEmitterRef,
     ViewEncapsulation,
 } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -24,16 +27,16 @@ import { AuthService } from 'src/app/services/auth.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
-    @Input() public showToggle = true;
-    @Input() public toggleChecked = false;
+    public readonly showToggle: InputSignal<boolean> = input<boolean>(true);
+    public readonly toggleChecked: InputSignal<boolean> = input<boolean>(false);
 
-    @Output() public readonly toggleMobileNav = new EventEmitter<void>();
-    @Output() public readonly toggleMobileFilterNav = new EventEmitter<void>();
-    @Output() public readonly toggleCollapsed = new EventEmitter<void>();
-    @Output() public readonly optionsChange = new EventEmitter<AppSettings>();
+    public readonly toggleMobileNav: OutputEmitterRef<void> = output<void>();
+    public readonly toggleMobileFilterNav: OutputEmitterRef<void> = output<void>();
+    public readonly toggleCollapsed: OutputEmitterRef<void> = output<void>();
+    public readonly optionsChange: OutputEmitterRef<AppSettings> = output<AppSettings>();
 
-    private readonly authService = inject(AuthService);
-    private readonly router = inject(Router);
+    private readonly authService: AuthService = inject(AuthService);
+    private readonly router: Router = inject(Router);
 
     public logout(): void {
         this.authService

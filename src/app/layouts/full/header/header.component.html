@@ -1,6 +1,6 @@
 <mat-toolbar class="topbar gap-2">
 
-    @if (!showToggle) {
+    @if (!showToggle()) {
         <button (click)="toggleMobileNav.emit()" class="flex justify-center" mat-icon-button>
             <i class="iconify flex" data-icon="solar:hamburger-menu-linear"></i>
         </button>
