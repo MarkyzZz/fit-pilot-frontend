@@ -1,13 +1,11 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    EventEmitter,
     inject,
     input,
-    Input,
     InputSignal,
     output,
-    Output, OutputEmitterRef,
+    OutputEmitterRef,
     ViewEncapsulation,
 } from '@angular/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -23,7 +21,6 @@ import { AuthService } from 'src/app/services/auth.service';
     selector: 'fp-header',
     imports: [RouterModule, NgScrollbarModule, TablerIconsModule, MaterialModule],
     templateUrl: './header.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
